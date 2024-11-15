@@ -1,0 +1,51 @@
+name: Ryujinx AppImage
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: AppImage / Setup
+      run: |
+        sudo apt update
+        sudo apt install libfuse2 desktop-file-utils
+    - name: AppImage / Build
+      run: ./build.sh
+    - name: Artifact / Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: Ryujinx-x86_64.AppImage
+        path: 'dist'
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Artifact / Download
+      uses: actions/download-artifact@v4
+      with:
+        name: Ryujinx-x86_64.AppImage
+    - name: AppImage / Version
+      run: cat dist/version >> $GITHUB_ENV
+    - name: Release
+      uses: marvinpinto/action-automatic-releases@v1
+      with:
+        title: ${{ env.APPIMAGE_VERSION }}
+        automatic_release_tag: ${{ env.APPIMAGE_VERSION }}
+        prerelease: false
+        draft: false
+        files: |
+          *.AppImage*
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
