@@ -14,7 +14,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.step1.outputs.test }}
+      version: ${{ steps.version.outputs.version }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -25,6 +25,7 @@ jobs:
     - name: AppImage / Build
       run: ./build.sh
     - name: AppImage / Version
+      id: version
       run: cat "./dist/version" >> $GITHUB_ENV"$GITHUB_OUTPUT"
     - name: Artifact / Upload
       uses: actions/upload-artifact@v4
