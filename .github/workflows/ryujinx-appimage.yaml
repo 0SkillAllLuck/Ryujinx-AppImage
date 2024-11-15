@@ -49,8 +49,8 @@ jobs:
       env:
         APPIMAGE_VERSION: ${{needs.build.outputs.version}}
       with:
-        title: v${{ env.APPIMAGE_VERSION }}
-        automatic_release_tag: latest
+        title: ${{ env.APPIMAGE_VERSION }}
+        automatic_release_tag: ${{ env.APPIMAGE_VERSION }}
         prerelease: false
         draft: false
         files: |
