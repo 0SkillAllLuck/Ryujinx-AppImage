@@ -50,7 +50,6 @@ jobs:
         APPIMAGE_VERSION: ${{needs.build.outputs.version}}
       with:
         title: ${{ env.APPIMAGE_VERSION }}
-        automatic_release_tag: ${{ env.APPIMAGE_VERSION }}
         prerelease: false
         draft: false
         files: |
