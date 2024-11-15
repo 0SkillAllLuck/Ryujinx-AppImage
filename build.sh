@@ -65,4 +65,4 @@ echo "Building AppImage: $appimageFile"
   "$appDir" "$appimageFile"
 
 # Save version to file
-echo "APPIMAGE_VERSION=$version" > "$distDir/version"
+echo "VERSION=$version" > "$distDir/version"
