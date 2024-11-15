@@ -22,6 +22,8 @@ jobs:
         sudo apt install libfuse2 desktop-file-utils
     - name: AppImage / Build
       run: ./build.sh
+    - name: AppImage / Version
+      run: cat "./dist/version" >> $GITHUB_ENV"$GITHUB_OUTPUT"
     - name: Artifact / Upload
       uses: actions/upload-artifact@v4
       with:
@@ -37,10 +39,10 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: Ryujinx-x86_64.AppImage
-    - name: AppImage / Version
-      run: cat dist/version >> $GITHUB_ENV
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest
+      env:
+        APPIMAGE_VERSION: ${{needs.build.outputs.APPIMAGE_VERSION}}
       with:
         title: ${{ env.APPIMAGE_VERSION }}
         automatic_release_tag: ${{ env.APPIMAGE_VERSION }}
