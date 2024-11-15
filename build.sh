@@ -28,6 +28,7 @@ appImageVersion="$(echo "$appImageReleaseURL" | awk -F"/" '{print $(NF-1)}')"
 # Check if the AppImage is the same version as the release
 if [ "$appImageVersion" = "$version" ]; then
   echo "AppImage already up to date"
+  exit 0
 fi
 
 # Download ryujinx release
