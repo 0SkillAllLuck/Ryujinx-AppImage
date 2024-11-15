@@ -22,13 +22,13 @@ releaseURL=$(wget -q https://api.github.com/repos/$REPOSITORY/releases -O - | se
 version="$(echo "$releaseURL" | awk -F"/" '{print $(NF-1)}')"
 
 # Download appimage release information
-# echo "Downloading AppImage Release information"
-# appImageReleaseURL=$(wget -q https://api.github.com/repos/0SkillAllLuck/Ryujinx-AppImage/releases -O - | sed 's/[()",{} ]/\n/g' | grep -oi "https:\/\/.*x86_64\.AppImage$" | head -1)
-# appImageVersion="$(echo "$appImageReleaseURL" | awk -F"/" '{print $(NF-1)}')"
-# if [ "$appImageVersion" == "$version" ]; then
-#   echo "AppImage version already exists"
-#   exit 0
-# fi
+echo "Downloading AppImage Release information"
+appImageReleaseURL=$(wget -q https://api.github.com/repos/0SkillAllLuck/Ryujinx-AppImage/releases -O - | sed 's/[()",{} ]/\n/g' | grep -oi "https:\/\/.*x86_64\.AppImage$" | head -1)
+appImageVersion="$(echo "$appImageReleaseURL" | awk -F"/" '{print $(NF-1)}')"
+# Check if the AppImage is the same version as the release
+if [ "$appImageVersion" = "$version" ]; then
+  echo "AppImage already up to date"
+fi
 
 # Download ryujinx release
 echo "Downloading Ryujinx version: $version"
