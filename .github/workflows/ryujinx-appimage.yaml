@@ -26,7 +26,7 @@ jobs:
       run: ./build.sh
     - name: AppImage / Version
       id: version
-      run: cat "./dist/version" >> $GITHUB_ENV"$GITHUB_OUTPUT"
+      run: cat "./dist/version" >> "$GITHUB_OUTPUT"
     - name: Artifact / Upload
       uses: actions/upload-artifact@v4
       with:
