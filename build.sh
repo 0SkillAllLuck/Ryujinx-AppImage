@@ -55,6 +55,7 @@ mv "$buildDir/publish/"* "$appDir/usr/bin"
 ./build/appimagetool --comp zstd --mksquashfs-opt -Xcompression-level --mksquashfs-opt 21 \
   -u "gh-releases-zsync|0SkillAllLuck|Ryujinx-AppImage|latest|*x86_64.AppImage.zsync" \
   "$appDir" "$distDir/$APP-$releaseVersion-x86_64.AppImage"
+mv "./$APP-$releaseVersion-x86_64.AppImage.zsync" "$distDir"
 
 # Save version to file
 echo "VERSION=$releaseVersion" > "$distDir/version"
