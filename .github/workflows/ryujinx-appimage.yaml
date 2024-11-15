@@ -25,9 +25,11 @@ jobs:
     - name: AppImage / Build
       run: ./build.sh
     - name: AppImage / Version
+      if: ${{ hashFiles('dist/') != '' }}
       id: version
       run: cat "./dist/version" >> "$GITHUB_OUTPUT"
     - name: Artifact / Upload
+      if: ${{ hashFiles('dist/') != '' }}
       uses: actions/upload-artifact@v4
       with:
         name: Ryujinx-x86_64.AppImage
@@ -36,9 +38,10 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    needs: build
     permissions:
       contents: write
-    needs: build
+    if: ${{needs.build.outputs.version != ''}}
     steps:
     - name: Artifact / Download
       uses: actions/download-artifact@v4
