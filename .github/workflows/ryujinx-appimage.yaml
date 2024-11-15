@@ -40,7 +40,7 @@ jobs:
     - name: AppImage / Version
       run: cat dist/version >> $GITHUB_ENV
     - name: Release
-      uses: marvinpinto/action-automatic-releases@v1
+      uses: marvinpinto/action-automatic-releases@latest
       with:
         title: ${{ env.APPIMAGE_VERSION }}
         automatic_release_tag: ${{ env.APPIMAGE_VERSION }}
